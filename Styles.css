@@ -1,0 +1,102 @@
+div.topdiv
+{
+	width:1560px;
+	height:740px;
+	border: 0px;
+	border-style: solid; 
+	border-color: red;
+	position: absolute;
+	top:0px;
+	left:0px;
+}
+
+div.leftdiv
+{
+	width:760px;
+	height:600px;
+	border: 0px;
+	border-style: solid; 
+	border-color: green;
+	position: absolute;
+	top:140px;
+	left:0px;
+}
+
+div.rightdiv
+{
+	width:760px;
+	height:600px;
+	border: 0px;
+	border-style: solid; 
+	border-color: blue;
+	position: absolute;
+	top:140px;
+	left:780px;
+}
+
+div.rightdiv img 
+{
+	position: absolute;
+	clip-path: url(#image);
+}
+
+div.rightdivcontent {
+	top:50px;
+	left:50px;
+	padding:1px;
+    border:1px solid #021a40;		
+	position: absolute;
+	height:500px;
+	width:500px;
+	background: repeating-linear-gradient(
+	  -55deg,
+	  #222,
+	  #222 10px,
+	  #333 10px,
+	  #333 20px
+	);
+}
+
+div.headdiv
+{
+	width:1560px;
+	height:140px;
+	border: 0px;
+	border-style: solid; 
+	border-color: red;
+	position: absolute;
+	top:0px;
+	left:0px;
+	text-align: center;
+}
+
+#iStart
+{
+	align:center;
+}
+
+H1 
+{ 
+	position: relative;
+	top:30px;
+	text-align: center; 
+}
+
+div.leftdivcontent
+{	
+	height:400px;
+	width:400px;
+	position: relative;
+	top:50px;
+	left:250px;
+	padding:1px;
+    border:1px solid #021a40;
+	padding-top:100px;
+	padding-left:100px;
+}
+
+span
+{
+	font-family: "Verdana", Georgia, Serif;
+	font-size: medium;
+}

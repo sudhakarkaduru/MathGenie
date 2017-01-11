@@ -1,0 +1,274 @@
+<html>
+<title>Math Genie!!!</title>
+<head>
+<link rel="stylesheet" href="styles.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"> </script>
+<script type="text/javascript">
+var imgId = 1;
+function startgame()
+{
+	getNewQuestion();
+	var elem = document.getElementById('leftdivContent');
+	elem.style.display = 'block';
+	
+	imgId = Math.floor(Math.random() * (15)) + 1;
+	var elem3 = document.getElementById('idImg');
+	elem3.src = 'imgs/Img' + imgId + '.png';
+	elem3.style.visibility = "hidden";
+	
+	var elem6 = document.getElementById('iNext');
+	elem6.style.visibility = "hidden";
+	
+	//sessionStorage.setItem("openparts", "");
+}
+
+function getNewQuestion()
+{
+	var max = 10;
+	var min = 0;
+	
+	var firstNum = Math.floor(Math.random() * (max - min + 1)) + min;
+	var secondNum = Math.floor(Math.random() * (max - min + 1)) + min;
+	var answer = firstNum + secondNum;
+	
+	if (typeof(Storage) !== "undefined") {
+		
+	} else {
+		alert('Storage is not supported. Hence application may not work correctly.');
+	}
+	
+	sessionStorage.setItem("Answer", answer);
+	
+	var elem = document.getElementById('pQue');
+	elem.textContent = firstNum + ' + ' + secondNum + ' = ?';
+	
+	var choice = Math.floor(Math.random() * (4)) + 1;
+	var choiceID = 'pAns' + choice;
+	var elem1 = document.getElementById(choiceID);
+	elem1.textContent = answer;
+	
+	for(i=1; i<=4; i++)
+	{
+		if (i != choice)
+		{
+			choiceID = 'pAns' + i;
+			var randomAnswer = Math.floor(Math.random() * (20)) + 1;
+			elem1 = document.getElementById(choiceID);
+			elem1.textContent = randomAnswer;
+		}
+	}	
+}
+
+function voiceFeedback(message)
+{
+	var u1 = new SpeechSynthesisUtterance(message);
+    u1.lang = 'en-US';
+    u1.pitch = 1;
+    u1.rate = 1;
+    //u1.voice = voices[10];
+    u1.voiceURI = 'native';
+    u1.volume = 1;
+    speechSynthesis.speak(u1);
+}
+
+function onSubmit()
+{
+	var radioObj = document.querySelector('input[name = "answer"]:checked');
+	
+	if(radioObj === undefined || radioObj == null || radioObj.length <= 0)
+	{
+		voiceFeedback('Please choose an answer.');
+	}
+	else
+	{
+		var radio = radioObj.value;
+		var radioID = 'pAns' + radio;
+		var elem2 = document.getElementById(radioID);
+		var ansSelected = elem2.textContent;
+
+		var ans = sessionStorage.getItem("Answer");
+		
+		if(ansSelected == ans)
+		{
+			voiceFeedback(chooseRightMessage());
+			setTimeout(onSubmit2, 3000);
+		}
+		else
+		{
+			voiceFeedback(chooseWrongMessage());
+		}		
+	}
+}
+
+var z = 1;
+function onSubmit2()
+{
+	var elem3 = document.getElementById('image');
+	elem3.innerHTML += choosePolygon();
+			
+	var elem4 = document.getElementById('idImg');
+	elem4.src = 'imgs/Img' + imgId + '.png?x='+ z;
+	elem4.style.visibility = "visible";
+	z += 1;
+	
+	var elem5 = document.getElementById('iSubmit');
+	elem5.style.visibility = "hidden";
+	
+	var elem6 = document.getElementById('iNext');
+	elem6.style.visibility = "visible";
+}
+
+function onNext()
+{
+	var elem = document.getElementById('leftdivContent');
+	elem.style.display = 'block';
+	
+	var ele = document.getElementsByName("answer");
+	for(var i=0;i<ele.length;i++)
+	{
+		ele[i].checked = false;
+	}
+		
+	getNewQuestion();
+	
+	var elem5 = document.getElementById('iSubmit');
+	elem5.style.visibility = "visible";
+	
+	var elem6 = document.getElementById('iNext');
+	elem6.style.visibility = "hidden";
+}
+
+function chooseRightMessage()
+{
+	var i = Math.floor(Math.random() * (4)) + 1;
+	
+	var name = 'Samik';
+	
+	switch(i)
+	{
+		case 1:
+			return 'Excellent, ' + name;
+		case 2:
+			return 'You are a rock star ' + name;
+		case 3:
+			return 'Cool beans man!'
+		case 4:
+			return 'Good Job ' + name;
+		default:
+			return 'Good job!';
+	}
+}
+
+function chooseWrongMessage()
+{
+	var i = Math.floor(Math.random() * (3)) + 1;
+	
+	var name = 'Samik';
+	
+	switch(i)
+	{
+		case 1:
+			return 'Uh-oh! Try again!';
+		case 2:
+			return 'Better luck next time ' + name;
+		case 3:
+			return 'Try again. You can do it ' + name;
+		default:
+			return 'Uh-oh! Try again!';
+	}
+}
+
+var openparts = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16];
+
+function choosePolygon()
+{
+	//var openparts = "";
+	//alert(sessionStorage.getItem("openparts"));
+	//if(sessionStorage.getItem("openparts") != null)
+	//{
+	//	openparts = sessionStorage.getItem("openparts");
+	//}
+	
+	//alert(openparts.length);
+	var k = Math.floor(Math.random() * (openparts.length)) + 1;
+	//alert(k);
+	//while(openparts.indexOf(k+';') !== -1)
+	//{
+	//	k = Math.floor(Math.random() * (16)) + 1;
+	//}
+
+	//alert(openparts);
+	//openparts = openparts + k + ';';
+	//alert(openparts);
+	//sessionStorage.setItem("openparts", openparts);
+	
+	var l = openparts[k-1];
+	openparts.splice(k-1, 1);
+	
+	switch(l)
+	{
+		case 1:
+			return '<polygon points="0 0,0.25 0,0.25 0.25,0 0.25" />';
+		case 2:
+			return '<polygon points="0.25 0,0.5 0,0.5 0.25,0.25 0.25" />';
+		case 3:
+			return '<polygon points="0.5 0,0.75 0,0.75 0.25,0.5 0.25" />';
+		case 4:
+			return '<polygon points="0.75 0,1 0,1 0.25,0.75 0.25" />';
+		case 5:
+			return '<polygon points="0 0.25,0.25 0.25,0.25 0.5,0 0.5" />';
+		case 6:
+			return '<polygon points="0.25 0.25,0.5 0.25,0.5 0.5,0.25 0.5" />';
+		case 7:
+			return '<polygon points="0.5 0.25,0.75 0.25,0.75 0.5,0.5 0.5" />';
+		case 8:
+			return '<polygon points="0.75 0.25,1 0.25,1 0.5,0.75 0.5" />';
+		case 9:
+			return '<polygon points="0 0.5,0.25 0.5,0.25 0.75,0 0.75" />';
+		case 10:
+			return '<polygon points="0.25 0.5,0.5 0.5,0.5 0.75,0.25 0.75" />';
+		case 11:
+			return '<polygon points="0.5 0.5,0.75 0.5,0.75 0.75,0.5 0.75" />';
+		case 12:
+			return '<polygon points="0.75 0.5,1 0.5,1 0.75,0.75 0.75" />';
+		case 13:
+			return '<polygon points="0 0.75,0.25 0.75,0.25 1,0 1" />';
+		case 14:
+			return '<polygon points="0.25 0.75,0.5 0.75,0.5 1,0.25 1" />';
+		case 15:
+			return '<polygon points="0.5 0.75,0.75 0.75,0.75 1,0.5 1" />';
+		case 16:
+			return '<polygon points="0.75 0.75,1 0.75,1 1,0.75 1" />';
+	}
+}
+</script>
+</head>
+<body onload="startgame()">
+	<div class="topdiv">
+		<div class="headdiv">
+		<H1>Math Genie!!!</H1>
+		</div>
+		<div class="leftdiv">
+			<div id="leftdivContent" class="leftdivContent">
+				&nbsp;&nbsp;<span id="pQue">Question ???</span><br><br><br><br>
+				<input type="radio" name="answer" value="1">&nbsp;&nbsp;<span id="pAns1">Answer 1</span><br><br>
+				<input type="radio" name="answer" value="2">&nbsp;&nbsp;<span id="pAns2">Answer 2</span><br><br>
+				<input type="radio" name="answer" value="3">&nbsp;&nbsp;<span id="pAns3">Answer 3</span><br><br>
+				<input type="radio" name="answer" value="4">&nbsp;&nbsp;<span id="pAns4">Answer 4</span><br><br><br><br>
+				<input type="button" name="submit" value="Submit" onclick="onSubmit()" id="iSubmit">
+				<input type="button" name="next" value="Next" onclick="onNext()" id="iNext">
+			</div>
+		</div>
+		<div class="rightdiv">
+			<div class="rightdivcontent">
+				<svg width="0" height="0" style="outline: 1px solid red">  
+				  <defs>  
+					<clipPath id="image" clipPathUnits="objectBoundingBox"></clipPath>  
+				  </defs>				
+				</svg>
+				<img id="idImg" alt="Puzzle Image" height="500px" width="500px"></img>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
